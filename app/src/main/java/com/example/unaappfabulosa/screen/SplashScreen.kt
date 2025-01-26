@@ -37,7 +37,6 @@ import com.example.unaappfabulosa.ui.theme.NunitoFamily
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 
-// Modelo de datos para una estrella
 data class Star(
     var x: Float,
     var y: Float,

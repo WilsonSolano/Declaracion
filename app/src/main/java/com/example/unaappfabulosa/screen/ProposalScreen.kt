@@ -292,7 +292,6 @@ fun ProposalScreen(
                             .padding(horizontal = 32.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        // Botón Sí
                         Button(
                             onClick = {
                                 showHeartAnimation = true
@@ -316,7 +315,7 @@ fun ProposalScreen(
                             Text("Sí", fontSize = 18.sp)
                         }
 
-                        // Botón No con movimiento aleatorio
+                        // boton No con movimiento aleatorio
                         Box(
                             modifier = Modifier
                                 .pointerInput(Unit) {
@@ -325,7 +324,6 @@ fun ProposalScreen(
                                             val maxX = maxWidth - buttonSize.width
                                             val maxY = maxHeight - buttonSize.height
 
-                                            // Movimiento aleatorio más suave
                                             noButtonOffset = Offset(
                                                 Random.nextFloat() * maxX,
                                                 Random.nextFloat() * maxY
@@ -353,7 +351,6 @@ fun ProposalScreen(
 
                             Button(
                                 onClick = {
-                                    // Calcular nueva posición aleatoria dentro del área segura
                                     val safeWidth = maxWidth - buttonSize.width
                                     val safeHeight = maxHeight - buttonSize.height
 
@@ -391,7 +388,6 @@ fun ProposalScreen(
             }
         }
 
-        // Lottie Animation con transición suave
         if (showHeartAnimation) {
             LottieAnimation(
                 composition = composition,

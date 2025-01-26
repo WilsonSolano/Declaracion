@@ -4,6 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -40,18 +49,62 @@ class MainActivity : ComponentActivity() {
 fun RomanceApp(modifier: Modifier) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "splash") {
-        composable("splash") {
+    NavHost(
+        navController = navController,
+        startDestination = "splash",
+        modifier = modifier
+    ) {
+        composable(
+            "splash",
+            enterTransition = { fadeIn(animationSpec = tween(300)) },
+            exitTransition = {
+                slideOutVertically(
+                    targetOffsetY = { -it },
+                    animationSpec = tween(500, easing = FastOutSlowInEasing)
+                ) + fadeOut()
+            }
+        ) {
             SplashScreen(onNavigateToProposal = {
                 navController.navigate("proposal")
             })
         }
-        composable("proposal") {
+
+        composable(
+            "proposal",
+            enterTransition = {
+
+                slideInVertically(
+                    initialOffsetY = { it },
+                    animationSpec = tween(500, easing = FastOutSlowInEasing)
+                ) + fadeIn()
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(700))
+            },
+            popEnterTransition = {
+                slideInVertically(
+                    initialOffsetY = { -it },
+                    animationSpec = tween(500)
+                ) + fadeIn()
+            }
+        ) {
             ProposalScreen(onAccept = {
                 navController.navigate("acceptance")
             })
         }
-        composable("acceptance") {
+
+        composable(
+            "acceptance",
+            enterTransition = {
+                scaleIn(
+                    initialScale = 5f,
+                    animationSpec = tween(800)
+                ) + fadeIn()
+            },
+            popExitTransition = {
+                fadeOut(animationSpec = tween(500))
+            }
+        ) {
             AcceptanceScreen()
         }
     }
